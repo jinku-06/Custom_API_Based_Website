@@ -1,0 +1,147 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="container mt-5">
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <div class="alert-container mb-4">
+    {% for category, message in messages %}
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
+
+  <!-- Image Upload Section -->
+  <div class="card border-0 shadow-lg p-4 mb-5 rounded-3">
+    <h3 class="mb-4 text-center">Upload an Image</h3>
+    <form
+      action="{{ url_for('home') }}"
+      id="upload-form"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div class="input-group mb-3">
+        <input
+          type="file"
+          name="file"
+          class="form-control"
+          id="image-upload"
+          accept="image/*"
+          onchange="previewImage(event)"
+          aria-label="Upload an image"
+        />
+        <button type="submit" class="btn btn-dark">Upload</button>
+      </div>
+      <!-- Image Preview -->
+      <div class="text-center mt-3">
+        <img
+          id="image-preview"
+          src=""
+          alt="Image preview"
+          class="img-fluid rounded border"
+          style="
+            display: none;
+            max-width: 300px;
+            height: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          "
+        />
+      </div>
+    </form>
+  </div>
+
+  <!-- Anime Details Section -->
+  {% if anime_data %}
+  <div class="card mb-4 border-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <!-- Anime Cover Image -->
+        <a href="{{anime_data.Media.siteUrl}}">
+          <img
+            src="{{ anime_data.Media.coverImage['large'] }}"
+            class="img-fluid w-100 h-100 object-fit-cover"
+            alt="Cover image for {{ anime_data.Media.title.romaji }} anime"
+            style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)"
+          />
+        </a>
+      </div>
+
+      <div class="col-md-8 p-4 bg-light">
+        <!-- Anime Title and Meta -->
+        <div class="mb-3">
+          <a href="{{anime_data.Media.siteUrl}}" class="text-decoration-none">
+            <h2 class="fw-bold mb-1">{{ anime_data.Media.title.romaji }}</h2>
+          </a>
+          <h4 class="text-muted">{{ anime_data.Media.title.english }}</h4>
+        </div>
+        <div class="mb-3">
+          <p class="mb-1">
+            <strong>Total Episodes:</strong> {{ anime_data.Media.episodes }}
+          </p>
+          <p class="mb-1">
+            <strong>Episode Duration:</strong> {{anime_data.Media.duration}} min
+          </p>
+          <p class="mb-1">
+            <strong>Format:</strong> {{anime_data.Media.format}}
+          </p>
+          <p class="mb-1">
+            <strong>Genres:</strong> {{ anime_data.Media.genres | join(', ') }}
+          </p>
+          <p class="mb-1"><strong>Scene Episode:</strong> {{ data.episode }}</p>
+          <p class="mb-3">
+            <strong>Similarity Score:</strong> {{ (data.similarity * 100) |
+            round(2) }}%
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Embedded Video Section -->
+    <div class="card-footer bg-light p-4">
+      <h5 class="fw-bold">Anime Scene Preview</h5>
+      <video autoplay controls class="w-100 mt-2" aria-label="Video clip">
+        <source src="{{ data.video }}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  {% else %}
+  <div class="text-center mt-5">
+    <p class="lead">Please upload an image to get anime details.</p>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById("image-preview");
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      preview.src = "";
+      preview.style.display = "none";
+    }
+  }
+</script>
+
+{% endblock body %}

@@ -1,0 +1,106 @@
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h2, h3, h5 {
+  font-family: 'Playfair Display', serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.card {
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card .btn {
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+  border-color: #4a90e2;
+}
+
+.btn-primary:hover {
+  background-color: #357ab7;
+  border-color: #357ab7;
+}
+
+.btn-close {
+  color: #000;
+}
+
+.alert-container .alert {
+  border-radius: 8px;
+}
+
+#image-preview {
+  display: none;
+  max-width: 300px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.anime-info p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.anime-info h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.anime-info h4 {
+  font-size: 1.25rem;
+  color: #6c757d;
+}
+
+a.text-decoration-none:hover {
+  text-decoration: underline;
+}
+
+.alert {
+  font-size: 1rem;
+}
+
+.alert-container {
+    margin-top: 20px;
+  }
+  
+  .alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  .alert-success {
+    background-color: #28a745;
+  }
+  
+  .alert-error {
+    background-color: #dc3545;
+  }
+  
+  .alert-info {
+    background-color: #17a2b8;
+  }
+  .preview-image {
+    max-width: 200px;
+    height: auto;
+    display: none;
+  }
+
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  
